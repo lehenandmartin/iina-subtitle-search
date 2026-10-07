@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      input[type="text"] {
+        width: 100%;
+        margin-top: 2px;
+      }
+      input[type="number"] {
+        width: 64px;
+      }
+      code {
+        font-family: ui-monospace, Menlo, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="pref-section">
+      Keyboard shortcut to open and close the search:
+      <input type="text" data-pref-key="shortcut" placeholder="None" spellcheck="false" />
+      <p class="small secondary pref-help">
+        Written in mpv’s key format, for example <code>Meta+f</code> for ⌘F or
+        <code>Ctrl+Shift+s</code>. Leave empty for no shortcut. Takes effect in new player
+        windows.
+      </p>
+    </div>
+
+    <div class="pref-section">
+      <label>
+        Start playback
+        <input type="number" data-type="float" data-pref-key="leadIn" min="0" max="30" step="0.5" />
+        seconds before the selected line
+      </label>
+      <p class="small secondary pref-help">
+        Use 0 to jump exactly to the moment the subtitle appears.
+      </p>
+    </div>
+
+    <div class="pref-section">
+      Location of ffmpeg:
+      <input
+        type="text"
+        data-pref-key="ffmpegPath"
+        placeholder="Find automatically"
+        spellcheck="false"
+      />
+      <p class="small secondary pref-help">
+        ffmpeg is only used to read subtitles embedded in the video file (for example in MKV or
+        MP4). Leave empty to look in the usual Homebrew and MacPorts locations.
+      </p>
+    </div>
+  </body>
+</html>

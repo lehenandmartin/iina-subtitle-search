@@ -1,0 +1,16 @@
+{
+  "name": "iina-subtitle-search",
+  "version": "1.0.0",
+  "description": "IINA plugin: search the subtitles of the current video and jump to any line.",
+  "private": true,
+  "author": "Martin Le Hénand",
+  "license": "MIT",
+  "repository": "github:lehenandmartin/iina-subtitle-search",
+  "scripts": {
+    "test": "node --test \"test/*.test.js\"",
+    "pack": "rm -f subtitle-search.iinaplgz && zip -rq subtitle-search.iinaplgz Info.json main.js preferences.html src ui LICENSE"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

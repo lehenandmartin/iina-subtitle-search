@@ -1,0 +1,23 @@
+{
+  "name": "Subtitle Search",
+  "identifier": "io.github.lehenandmartin.subtitle-search",
+  "version": "1.0.0",
+  "ghRepo": "lehenandmartin/iina-subtitle-search",
+  "ghVersion": 1,
+  "description": "Search the subtitles of the current video and jump to any line.",
+  "author": {
+    "name": "Martin Le Hénand",
+    "url": "https://github.com/lehenandmartin"
+  },
+  "entry": "main.js",
+  "sidebarTab": {
+    "name": "Subtitle Search"
+  },
+  "preferencesPage": "preferences.html",
+  "preferenceDefaults": {
+    "ffmpegPath": "",
+    "leadIn": 0,
+    "shortcut": "Meta+f"
+  },
+  "permissions": ["file-system"]
+}

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Subtitle Search</title>
+    <link rel="stylesheet" href="sidebar.css" />
+  </head>
+  <body>
+    <header>
+      <div class="search">
+        <svg class="search-icon" viewBox="0 0 16 16" aria-hidden="true">
+          <circle cx="6.75" cy="6.75" r="4.5" />
+          <path d="M10.2 10.2 14 14" />
+        </svg>
+        <input
+          id="query"
+          type="text"
+          placeholder="Search subtitles"
+          aria-label="Search subtitles"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+        />
+        <button id="clear" type="button" aria-label="Clear search" tabindex="-1" hidden>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 5l6 6M11 5l-6 6" /></svg>
+        </button>
+      </div>
+      <div class="meta">
+        <span id="summary" aria-live="polite"></span>
+        <select id="track" aria-label="Subtitle track" hidden></select>
+      </div>
+    </header>
+
+    <div id="list" role="listbox" aria-label="Subtitle lines"></div>
+
+    <section id="notice" hidden>
+      <p id="notice-title"></p>
+      <p id="notice-body"></p>
+      <pre id="notice-detail" hidden></pre>
+      <button id="retry" type="button" hidden>Try Again</button>
+    </section>
+
+    <script src="search.js"></script>
+    <script src="sidebar.js"></script>
+  </body>
+</html>

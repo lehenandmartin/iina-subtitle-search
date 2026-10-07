@@ -1,0 +1,276 @@
+/*
+ * The webview is transparent and sits on IINA's sidebar material, so no
+ * background is set on the page. Colours follow the sidebar's appearance.
+ */
+:root {
+  color-scheme: light dark;
+  --text: rgba(0, 0, 0, 0.88);
+  --text-secondary: rgba(0, 0, 0, 0.5);
+  --separator: rgba(0, 0, 0, 0.1);
+  --field: rgba(0, 0, 0, 0.06);
+  --field-border: rgba(0, 0, 0, 0.1);
+  --hover: rgba(0, 0, 0, 0.06);
+  --selected: rgba(0, 122, 255, 0.18);
+  --accent: #007aff;
+  --focus-ring: rgba(0, 122, 255, 0.4);
+  --mark: rgba(255, 204, 0, 0.55);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: rgba(255, 255, 255, 0.9);
+    --text-secondary: rgba(255, 255, 255, 0.5);
+    --separator: rgba(255, 255, 255, 0.1);
+    --field: rgba(255, 255, 255, 0.08);
+    --field-border: rgba(255, 255, 255, 0.12);
+    --hover: rgba(255, 255, 255, 0.07);
+    --selected: rgba(10, 132, 255, 0.34);
+    --accent: #3b9eff;
+    --focus-ring: rgba(10, 132, 255, 0.55);
+    --mark: rgba(255, 214, 10, 0.4);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font: 13px/1.35 -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  color: var(--text);
+  cursor: default;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* Search field ------------------------------------------------------------ */
+
+header {
+  flex: none;
+  padding: 10px 12px 8px;
+  border-bottom: 1px solid var(--separator);
+}
+
+.search {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 8px;
+  top: 7px;
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: var(--text-secondary);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
+#query {
+  width: 100%;
+  height: 28px;
+  padding: 0 26px 0 28px;
+  border: 1px solid var(--field-border);
+  border-radius: 7px;
+  background: var(--field);
+  color: var(--text);
+  font: inherit;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+#query::placeholder {
+  color: var(--text-secondary);
+}
+
+/*
+ * The focus ring is tied to .engaged, which sidebar.js sets on a real click or
+ * key press, rather than to :focus alone. A webview that does not hold the
+ * keyboard can still report :focus, and a ring there would promise typing that
+ * actually goes to the player.
+ */
+#query.engaged:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+#clear {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--text-secondary);
+  cursor: default;
+}
+
+#clear svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+@media (prefers-color-scheme: dark) {
+  #clear svg {
+    stroke: #222;
+  }
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 20px;
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+#summary {
+  flex: none;
+  white-space: nowrap;
+}
+
+#track {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 68%;
+  font: inherit;
+  color: var(--text);
+}
+
+/* Result list ------------------------------------------------------------- */
+
+#list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 4px 6px 10px;
+}
+
+.row {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 5px 8px 5px 10px;
+  border-radius: 6px;
+}
+
+.row:hover {
+  background: var(--hover);
+}
+
+.row.selected {
+  background: var(--selected);
+}
+
+/* The line on screen right now. */
+.row.active::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+.time {
+  flex: none;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+}
+
+.row.active .time {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.text {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+mark {
+  padding: 0 1px;
+  margin: 0 -1px;
+  border-radius: 3px;
+  background: var(--mark);
+  color: inherit;
+}
+
+.more {
+  padding: 10px 8px 0;
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* Empty and error states -------------------------------------------------- */
+
+#notice {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 28px 20px;
+  text-align: center;
+}
+
+#notice-title {
+  margin: 0 0 6px;
+  font-weight: 600;
+}
+
+#notice-body {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+#notice-detail {
+  margin: 12px 0 0;
+  padding: 8px;
+  border-radius: 6px;
+  background: var(--field);
+  color: var(--text-secondary);
+  font: 11px/1.4 ui-monospace, Menlo, monospace;
+  text-align: left;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+#retry {
+  margin-top: 14px;
+  font: inherit;
+}
